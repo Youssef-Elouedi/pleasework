@@ -333,10 +333,31 @@ function initializeClientForm() {
 
   submitButton.addEventListener('click', (e) => {
     e.preventDefault();
-    alert('Message envoyé avec succès!');
-    document.getElementById('client-form').reset();
-    formPage1.style.display = 'block';
-    formPage2.style.display = 'none';
-    nextButton.disabled = true;
+  
+    const formData = {
+      choice: choice.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      details: additionalFields.querySelector('textarea')?.value || "",
+    };
+  
+    // Initialize EmailJS (replace YOUR_USER_ID with your actual User ID)
+    emailjs.init("N1gXB2oQZlwyVSTO7");
+  
+    // Send form data via EmailJS (replace YOUR_SERVICE_ID and YOUR_TEMPLATE_ID with your values)
+    emailjs.send("service_j35e95b", "template_73jyldv", formData)
+      .then(() => {
+        alert('Message envoyé avec succès!');
+        document.getElementById('client-form').reset(); // Reset the form
+        formPage1.style.display = 'block';
+        formPage2.style.display = 'none';
+        nextButton.disabled = true;
+      })
+      .catch((error) => {
+        console.error('Erreur lors de l\'envoi de l\'email:', error);
+        alert('Une erreur est survenue. Veuillez réessayer.');
+      });
   });
+  
 }
