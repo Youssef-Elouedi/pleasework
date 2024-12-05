@@ -9,6 +9,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script type="module" src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
@@ -293,6 +295,29 @@
       </div>
     </section>
 
+    <section id="custom-fonctions" class="section">
+      <h2>Personnalisation des Fonctions et Critères</h2>
+      <div class="functions-table">
+        <table id="custom-table">
+          <thead>
+            <tr>
+              <th>Fonction</th>
+              <th>Critère d’appréciation</th>
+              <th>Niveau d’exigence</th>
+              <th>Flexibilité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows will be dynamically added here -->
+          </tbody>
+        </table>
+        <button id="add-row-btn" class="add-row-btn">+</button>
+        <button id="download-pdf-btn" class="download-btn">Télécharger en PDF</button>
+      </div>
+    </section>
+    
+    
+    
 
     <section id="variants" class="section">
       <h2>Variantes et Solutions</h2>
@@ -472,38 +497,55 @@
         Merci de remplir ce formulaire pour partager vos plaintes, demandes ou messages avec nous. Votre retour est
         important pour améliorer nos services.
       </p>
-
+    
       <form id="client-form">
-        <div id="formPage1" class="info-card">
-          <label for="choice">Type de message:</label>
-          <select id="choice" name="choice" required>
-            <option value="" disabled selected>Choisissez une option</option>
-            <option value="complaint">Plainte</option>
-            <option value="request">Demande/Question</option>
-            <option value="simpleMessage">Message simple</option>
+        <!-- First Name -->
+        <div class="field">
+          <label for="firstName">Prénom</label>
+          <input type="text" name="firstName" id="firstName" required>
+        </div>
+    
+        <!-- Last Name -->
+        <div class="field">
+          <label for="lastName">Nom</label>
+          <input type="text" name="lastName" id="lastName" required>
+        </div>
+    
+        <!-- Email -->
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+    
+        <!-- Type of Message (Dropdown) -->
+        <div class="field">
+          <label for="choice">Type de Message</label>
+          <select name="choice" id="choice" required>
+            <option value="" disabled selected>Choisissez un type de message</option>
+            <option value="Plainte">Plainte</option>
+            <option value="Demande">Demande</option>
+            <option value="Message général">Message général</option>
           </select>
-
-          <label for="firstName">Prénom:</label>
-          <input type="text" id="firstName" name="firstName" placeholder="Entrez votre prénom" required />
-
-          <label for="lastName">Nom:</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Entrez votre nom" required />
-
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" placeholder="Entrez votre email" required />
-
-          <button type="button" id="nextButton" class="theme-toggle" disabled>Suivant</button>
         </div>
-
-        <div id="formPage2" class="info-card" style="display: none;">
-          <div id="additionalFields">
-            <!-- Additional fields are dynamically added here -->
-          </div>
-          <button type="button" id="backButton" class="theme-toggle">Retour</button>
-          <button type="submit" id="submitButton" class="theme-toggle">Envoyer</button>
+    
+        <!-- Details -->
+        <div class="field">
+          <label for="details">Détails</label>
+          <textarea name="details" id="details" rows="4" required></textarea>
         </div>
+    
+        <!-- Submit Button -->
+        <button type="submit" id="button" disabled>Envoyer</button>
       </form>
+    
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+      <script>
+        emailjs.init('N1gXB2oQZlwyVSTO7'); // Replace with your EmailJS User ID
+      </script>
     </section>
+    
+    
+    
   </main>
   <footer>
     <div class="footer-content">

@@ -8,7 +8,76 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeCustomizationForm();
   initializeClientForm();
   initializeSlider(); // Correct placement for slider initialization
+
+  // Add functionality for customizing the "Fonctions et Critères" table
+  const addRowBtn = document.getElementById('add-row-btn');
+  const customTable = document.getElementById('custom-table').querySelector('tbody');
+  const sourceRows = document.querySelectorAll('.functions-table tbody tr');
+
+  let currentRowIndex = 0; // Keep track of added rows
+
+  addRowBtn.addEventListener('click', () => {
+    if (currentRowIndex >= sourceRows.length) {
+      alert('Toutes les fonctions ont été ajoutées!');
+      return;
+    }
+
+    const sourceRow = sourceRows[currentRowIndex];
+    const newRow = document.createElement('tr');
+    const columns = sourceRow.querySelectorAll('td');
+
+    columns.forEach((column, index) => {
+      const cell = document.createElement('td');
+      cell.innerHTML = column.innerHTML;
+
+      // Make Niveau d’exigence and Flexibilité columns editable
+      if (index === 2 || index === 3) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = column.textContent.trim();
+        cell.innerHTML = ''; // Clear existing content
+        cell.appendChild(input);
+      }
+
+      newRow.appendChild(cell);
+    });
+
+    customTable.appendChild(newRow);
+    currentRowIndex++;
+  });
+
+  // Add functionality for downloading the table as a PDF
+  const downloadPdfBtn = document.getElementById('download-pdf-btn');
+
+  downloadPdfBtn.addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Get the table
+    const table = document.getElementById('custom-table');
+    if (!table) {
+      alert('Table not found!');
+      return;
+    }
+
+    // Replace input fields with their values
+    const rows = table.querySelectorAll('tr');
+    rows.forEach(row => {
+      const inputs = row.querySelectorAll('input');
+      inputs.forEach(input => {
+        const cell = input.parentNode;
+        cell.innerHTML = input.value; // Replace the input with its value
+      });
+    });
+
+    // Use jsPDF autoTable plugin
+    doc.autoTable({ html: table });
+
+    // Save the PDF
+    doc.save('Personnalisation_Fonctions_Critères.pdf');
+  });
 });
+
 
 function initializeSlider() {
   const slider = document.querySelector(".slider");
@@ -280,9 +349,52 @@ document.getElementById('download-content').addEventListener('click', async () =
   link.click();
 });
 
+function initializeClientForm() {
+  const form = document.getElementById('client-form'); // Correct form ID
+  const btn = document.getElementById('button'); // Submit button
+
+  // Enable button when all required fields are filled
+  const validateForm = () => {
+      const fields = form.querySelectorAll('input[required], select[required], textarea[required]');
+      let isValid = true;
+      fields.forEach(field => {
+          if (!field.value.trim()) {
+              isValid = false;
+          }
+      });
+      btn.disabled = !isValid; // Enable/disable the button
+  };
+
+  form.addEventListener('input', validateForm); // Validate form on input
+
+  // Handle form submission
+  form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      btn.textContent = 'Envoi en cours...'; // Update button text to indicate submission progress
+
+      const serviceID = 'default_service'; // Use 'default_service' for EmailJS
+      const templateID = 'template_73jyldv'; // Replace with your EmailJS template ID
+
+      // Send form data to EmailJS
+      emailjs.sendForm(serviceID, templateID, this)
+          .then(() => {
+              btn.textContent = 'Envoyer'; // Reset button text
+              alert('Votre message a été envoyé avec succès!');
+              form.reset(); // Reset form fields
+              validateForm(); // Revalidate to disable button after reset
+          })
+          .catch((err) => {
+              btn.textContent = 'Envoyer'; // Reset button text
+              alert('Une erreur est survenue: ' + JSON.stringify(err)); // Show error message
+          });
+  });
+
+  validateForm(); // Initial validation
+}
 
 
-
+/*
 function initializeClientForm() {
   const choice = document.getElementById('choice');
   const firstName = document.getElementById('firstName');
@@ -361,3 +473,6 @@ function initializeClientForm() {
   });
   
 }
+*/
+
+

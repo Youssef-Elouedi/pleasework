@@ -515,6 +515,77 @@ nav a[aria-current="page"] {
   opacity: 0.6;
 }
 
+
+.table-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+#custom-table th,
+#custom-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.add-row-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.add-row-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Styling for the "+" button below the table */
+.add-row-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto 0;
+  transition: var(--transition);
+}
+
+.add-row-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.download-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto 0;
+  transition: var(--transition);
+}
+
+.download-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
 /* Footer styles */
 footer {
   background: var(--primary-color);
