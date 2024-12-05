@@ -265,18 +265,21 @@ document.getElementById('download-content').addEventListener('click', async () =
   const unityCanvas = iframeDocument.querySelector('canvas');
 
   if (!unityCanvas) {
-      alert("Unity canvas not found.");
-      return;
+    alert("Unity canvas not found.");
+    return;
   }
 
-  const canvasScreenshot = await html2canvas(unityCanvas);
+  // Use html2canvas to capture the canvas
+  const canvasScreenshot = await html2canvas(unityCanvas, { useCORS: true });
   const imageData = canvasScreenshot.toDataURL('image/png');
 
-  const downloadLink = document.createElement('a');
-  downloadLink.href = imageData;
-  downloadLink.download = 'unity-screenshot.png';
-  downloadLink.click();
+  // Create a download link for the screenshot
+  const link = document.createElement('a');
+  link.href = imageData;
+  link.download = 'unity-screenshot.png';
+  link.click();
 });
+
 
 
 
