@@ -273,7 +273,7 @@ nav a[aria-current="page"] {
 }
 
 .functions-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* Alternating row colors */
+  background-color: var(--card-bg); /* Adapt to dark mode */
 }
 
 .functions-table td:nth-child(2) {
@@ -459,7 +459,7 @@ nav a[aria-current="page"] {
 #client-form .form-intro {
   text-align: center;
   font-size: 1.1rem;
-  color: var(--text-color);
+  color: var(--text-color); /* Adapt to theme */
   margin-bottom: 1rem;
 }
 
@@ -469,50 +469,56 @@ nav a[aria-current="page"] {
   gap: 1rem;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: var(--shadow);
-  background: var(--card-bg);
+  box-shadow: var(--shadow); /* Adapt to theme */
+  background: var(--card-bg); /* Adapt to theme */
 }
 
 #client-form label {
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--text-color); /* Adapt label text color */
 }
 
 #client-form input,
 #client-form select,
-#client-form textarea,
-#client-form button {
+#client-form textarea {
   padding: 0.8rem;
-  border: 1px solid var(--secondary-color);
+  border: 1px solid var(--secondary-color); /* Adapt border color */
   border-radius: 4px;
   font-size: 1rem;
   width: 100%;
+  background-color: var(--card-bg); /* Adapt input background */
+  color: var(--text-color); /* Adapt text color */
 }
 
 #client-form input:focus,
 #client-form select:focus,
 #client-form textarea:focus {
-  border-color: var(--accent-color);
+  border-color: var(--accent-color); /* Highlight on focus */
   outline: none;
 }
 
 #client-form button {
-  background-color: var(--secondary-color);
-  color: white;
-  cursor: not-allowed;
+  padding: 0.8rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: var(--secondary-color); /* Adapt button background */
+  color: var(--text-color); /* Adapt button text */
+  cursor: not-allowed; /* Default state */
   transition: var(--transition);
+  opacity: 0.8; /* Slight opacity for disabled state */
 }
 
 #client-form button:enabled {
   cursor: pointer;
+  opacity: 1; /* Fully opaque when enabled */
 }
 
 #client-form button:hover:enabled {
-  background-color: var(--accent-color);
+  background-color: var(--accent-color); /* Highlight on hover */
 }
 
 #client-form button:disabled {
-  opacity: 0.6;
+  opacity: 0.5; /* Reduced opacity for disabled state */
 }
 
 
